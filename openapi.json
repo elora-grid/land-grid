@@ -1,0 +1,252 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Elora Land & Grid public catalogue",
+    "version": "1.0.0",
+    "description": "Anonymous read-only published research. Missing facts remain unknown. Personal saves and private assessments are excluded."
+  },
+  "servers": [
+    {
+      "url": "https://eloragrid.ai"
+    }
+  ],
+  "paths": {
+    "/land-grid/catalogue.json": {
+      "get": {
+        "operationId": "searchLandGrid",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Name, operator or locality; maximum 200 characters"
+          },
+          {
+            "name": "kind",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "data-centres, substations or mines"
+          },
+          {
+            "name": "country",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "ISO alpha-2 country, for example AU or US"
+          },
+          {
+            "name": "region",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Published jurisdiction code, for example NSW"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 500,
+              "default": 100
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Paginated public entities; follow next_page until null",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "items",
+                    "total",
+                    "next_page"
+                  ],
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Entity"
+                      }
+                    },
+                    "next_page": {
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
+                    },
+                    "total": {
+                      "type": "integer"
+                    },
+                    "revision": {
+                      "type": "string",
+                      "description": "Filtered catalogue content revision; reject changed revisions during a multi-page snapshot."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid filter or pagination"
+          }
+        }
+      }
+    },
+    "/land-grid/entities/{slug}.json": {
+      "get": {
+        "operationId": "getLandGridEntity",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-z0-9_-]+$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Published entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Entity"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No published entity"
+          }
+        }
+      }
+    },
+    "/land-grid/entities/{slug}.md": {
+      "get": {
+        "operationId": "getLandGridEntityMarkdown",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Public Markdown; cite canonical URL and sources",
+            "content": {
+              "text/markdown": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No published entity"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Entity": {
+        "type": "object",
+        "required": [
+          "id",
+          "slug",
+          "kind",
+          "name",
+          "url",
+          "sources",
+          "opportunity"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "data-centres",
+              "substations",
+              "mines"
+            ]
+          },
+          "name": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "sources": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "url"
+              ],
+              "properties": {
+                "url": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              }
+            }
+          },
+          "opportunity": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "description": "Explicitly published original brief. A likelihood, if present, is a dated editorial estimate with event, horizon, rationale and sources; never derived automatically from stage."
+          },
+          "location_uncertainty": {
+            "type": "object",
+            "properties": {
+              "precision": {
+                "type": "string"
+              },
+              "radius_m": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 5000
+              }
+            },
+            "description": "A geographic screening radius in metres, not a surveyed footprint."
+          }
+        }
+      }
+    }
+  }
+}

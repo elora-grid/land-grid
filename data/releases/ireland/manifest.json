@@ -1,0 +1,25 @@
+{
+  "format": "elora-land-grid-v1",
+  "reference": "ie-public-20261111-00db5bfccdfd",
+  "region": "IE",
+  "prepared_at": "2026-11-10T10:55:58+00:00",
+  "records": 6,
+  "counts": {
+    "datacentre": 6
+  },
+  "mapped": {
+    "datacentre": 6
+  },
+  "files": [
+    {
+      "path": "metadata.json",
+      "bytes": 5487,
+      "sha256": "7e5d37af9ac2d0e91c2f9ffc6f0aedebf63508346313aa73bd8018a169064ada"
+    },
+    {
+      "path": "records.ndjson.gz",
+      "bytes": 1908,
+      "sha256": "00db5bfccdfd9a55a7e59f4e7808427b8d6201fe598918f10753a1e47baf2e50"
+    }
+  ]
+}

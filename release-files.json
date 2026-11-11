@@ -1,0 +1,19 @@
+[
+  ".github/workflows/check.yml",
+  ".gitignore",
+  "LICENSE",
+  "README.md",
+  "SECURITY.md",
+  "data/README.md",
+  "data/catalogue.ndjson",
+  "data/releases/ireland/manifest.json",
+  "data/releases/ireland/metadata.json",
+  "data/releases/ireland/records.ndjson.gz",
+  "openapi.json",
+  "scripts/check_release.py",
+  "scripts/package.py",
+  "scripts/query.py",
+  "scripts/render.py",
+  "scripts/sync.py",
+  "tests/test_public.py"
+]
