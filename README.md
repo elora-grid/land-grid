@@ -4,6 +4,17 @@ Free infrastructure research for electrical engineering companies investigating 
 
 This repository is the public companion: public facts, source attribution, schemas and small reader/export/render tools. It is independently runnable with Python 3.11+. It contains no application backend, login implementation, credentials, customer workspaces, private reports, professional contacts or raw research archives.
 
+## Public map and navigation
+
+The [live Land & Grid tool](https://eloragrid.ai/land-grid) opens the published Australian, United States and European coverage together, with a country selector.
+
+- The default view is a lightweight non-satellite map. Satellite imagery is optional. Mapped data-centre points stay loaded while visitors pan and zoom; detailed electricity-network layers load separately as visitors zoom closer.
+- **Data centre stage** appears directly below **Search for**. The stage checkboxes filter results without opening Advanced search.
+- The introductory paragraphs, filter explanation and redundant workspace badge have been removed from the visible interface.
+- The three directory cards appear **below the map**: [Data centres — facilities, campuses and development projects](https://eloragrid.ai/land-grid/data-centres), [Substations — browse network assets and view them on the map](https://eloragrid.ai/land-grid/substations), and [Mine sites — browse mining infrastructure on the map](https://eloragrid.ai/land-grid/mines).
+
+The tool includes self-hosted country outlines; detailed street tiles and satellite imagery still need an internet connection. This companion supplies standalone public data readers and an HTML renderer. The live website, map application and account system are maintained in their existing private repositories; their implementation is not included here.
+
 ## Published sample and live catalogue
 
 The checked-in sample contains **six Irish planning records** cleared for redistribution under CC BY 4.0. These examples do not imply live map additions or current construction. Approval dates are historical observations. Every location has a 1,500 m uncertainty radius. See [data/README.md](data/README.md).
